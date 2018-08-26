@@ -13,6 +13,7 @@ namespace WPF.GettingStarted.Models
     {
         /// <summary>
         /// Gets or sets the family name.
+        /// Получает или задает семью.
         /// </summary>
         public string FamilyName
         {
@@ -22,11 +23,13 @@ namespace WPF.GettingStarted.Models
 
         /// <summary>
         /// Register the FamilyName property so it is known in the class.
+        /// Зарегистрируйте свойство FamilyName, чтобы оно было известно в классе.
         /// </summary>
         public static readonly PropertyData FamilyNameProperty = RegisterProperty("FamilyName", typeof(string), null);
 
         /// <summary>
         /// Gets or sets the list of persons in this family.
+        /// Получает или задает список лиц в этом семействе.
         /// </summary>
         public ObservableCollection<Person> Persons
         {
@@ -36,6 +39,7 @@ namespace WPF.GettingStarted.Models
 
         /// <summary>
         /// Register the Persons property so it is known in the class.
+        /// Зарегистрируйте список лиц, чтобы он был известен в классе.
         /// </summary>
         public static readonly PropertyData PersonsProperty = RegisterProperty("Persons", typeof(ObservableCollection<Person>), () => new ObservableCollection<Person>());
 
@@ -43,7 +47,7 @@ namespace WPF.GettingStarted.Models
         {
             if (string.IsNullOrWhiteSpace(FamilyName))
             {
-                validationResults.Add(FieldValidationResult.CreateError(FamilyNameProperty, "The family name is required"));
+                validationResults.Add(FieldValidationResult.CreateError(FamilyNameProperty, "Фамилия обязательна"));
             }
         }
 

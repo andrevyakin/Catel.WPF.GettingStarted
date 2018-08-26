@@ -8,6 +8,7 @@
     {
         /// <summary>
         /// Gets or sets the first name.
+        /// Получает или задает имя.
         /// </summary>
         public string FirstName
         {
@@ -17,11 +18,13 @@
 
         /// <summary>
         /// Register the FirstName property so it is known in the class.
+        /// Зарегистрируйте свойство FirstName, чтобы оно было известно в классе.
         /// </summary>
         public static readonly PropertyData FirstNameProperty = RegisterProperty("FirstName", typeof(string), null);
 
         /// <summary>
         /// Gets or sets the last name.
+        /// Получает или задает фамилию.
         /// </summary>
         public string LastName
         {
@@ -31,6 +34,7 @@
 
         /// <summary>
         /// Register the LastName property so it is known in the class.
+        /// Зарегистрируйте свойство LastName, чтобы оно было известно в классе.
         /// </summary>
         public static readonly PropertyData LastNameProperty = RegisterProperty("LastName", typeof(string), null);
 
@@ -38,12 +42,12 @@
         {
             if (string.IsNullOrWhiteSpace(FirstName))
             {
-                validationResults.Add(FieldValidationResult.CreateError(FirstNameProperty, "The first name is required"));
+                validationResults.Add(FieldValidationResult.CreateError(FirstNameProperty, "Требуется имя"));
             }
 
             if (string.IsNullOrWhiteSpace(LastName))
             {
-                validationResults.Add(FieldValidationResult.CreateError(LastNameProperty, "The last name is required"));
+                validationResults.Add(FieldValidationResult.CreateError(LastNameProperty, "Требуется фамилия"));
             }
         }
 

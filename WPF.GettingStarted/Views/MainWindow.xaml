@@ -1,16 +1,20 @@
-﻿<catel:DataWindow x:Class="WPF.GettingStarted.Views.MainWindow"
-                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-				  xmlns:catel="http://catel.codeplex.com"
-				  xmlns:views="clr-namespace:WPF.GettingStarted.Views"
-				  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-				  ShowInTaskbar="True" ResizeMode="CanResize" SizeToContent="Manual" WindowStartupLocation="Manual" WindowState="Maximized">
+﻿<catel:DataWindow
+    x:Class="WPF.GettingStarted.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:catel="http://catel.codeplex.com"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:views="clr-namespace:WPF.GettingStarted.Views"
+    ResizeMode="CanResize"
+    ShowInTaskbar="True"
+    SizeToContent="Manual"
+    WindowStartupLocation="Manual"
+    WindowState="Maximized">
 
-    <!-- Resources -->
-    <catel:DataWindow.Resources>
-    </catel:DataWindow.Resources>
+    <!--  Resources  -->
+    <catel:DataWindow.Resources />
 
-    <!-- Content -->
+    <!--  Content  -->
     <catel:StackGrid>
         <catel:StackGrid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -36,7 +40,10 @@
             </TextBox>
         </catel:StackGrid>
 
-        <ListBox x:Name="listBox" ItemsSource="{Binding FilteredFamilies}" SelectedItem="{Binding SelectedFamily}">
+        <ListBox
+            x:Name="listBox"
+            ItemsSource="{Binding FilteredFamilies}"
+            SelectedItem="{Binding SelectedFamily}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

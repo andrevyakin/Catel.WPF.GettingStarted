@@ -47,20 +47,23 @@ namespace WPF.GettingStarted.ViewModels
             this.uiVisualizerService = uiVisualizerService;
             this.messageService = messageService;
 
+            //Команды
             AddFamily = new TaskCommand(OnAddFamilyExecuteAsync);
             EditFamily = new TaskCommand(OnEditFamilyExecute, OnEditFamilyCanExecute);
             RemoveFamily = new TaskCommand(OnRemoveFamilyExecute, OnRemoveFamilyCanExecute);
         }
 
-        #region Properties
+        #region Properties Свойства
         /// <summary>
         /// Gets the title of the view model.
+        /// Возвращает название модели представления.
         /// </summary>
         /// <value>The title.</value>
         public override string Title { get { return "WPF Getting Started example"; } }
 
         /// <summary>
         /// Gets the families.
+        /// Получает семьи.
         /// </summary>
         public ObservableCollection<Family> Families
         {
@@ -70,11 +73,13 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Register the Families property so it is known in the class.
+        /// Зарегистрируйте свойство Families, чтобы оно было известно в классе.
         /// </summary>
         public static readonly PropertyData FamiliesProperty = RegisterProperty("Families", typeof(ObservableCollection<Family>), null);
 
         /// <summary>
         /// Gets the filtered families.
+        /// Получает фильтрованные семейства.
         /// </summary>
         public ObservableCollection<Family> FilteredFamilies
         {
@@ -84,11 +89,13 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Register the FilteredFamilies property so it is known in the class.
+        /// Зарегистрируйте свойство FilteredFamilies, чтобы оно было известно в классе.
         /// </summary>
         public static readonly PropertyData FilteredFamiliesProperty = RegisterProperty("FilteredFamilies", typeof(ObservableCollection<Family>));
 
         /// <summary>
         /// Gets or sets the search filter.
+        /// Получает или задает фильтр поиска.
         /// </summary>
         public string SearchFilter
         {
@@ -98,12 +105,14 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Register the SearchFilter property so it is known in the class.
+        /// Зарегистрируйте свойство SearchFilter, чтобы оно было известно в классе.
         /// </summary>
         public static readonly PropertyData SearchFilterProperty = RegisterProperty("SearchFilter", typeof(string), null, 
             (sender, e) => ((MainWindowViewModel)sender).UpdateSearchFilter());
 
         /// <summary>
         /// Gets or sets the selected family.
+        /// Получает или задает выбранное семейство.
         /// </summary>
         public Family SelectedFamily
         {
@@ -113,6 +122,7 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Register the SelectedFamily property so it is known in the class.
+        /// Зарегистрируйте свойство SelectedFamily, чтобы оно было известно в классе.
         /// </summary>
         public static readonly PropertyData SelectedFamilyProperty = RegisterProperty("SelectedFamily", typeof(Family), null);
         #endregion
@@ -120,11 +130,13 @@ namespace WPF.GettingStarted.ViewModels
         #region Commands
         /// <summary>
         /// Gets the AddFamily command.
+        /// Возвращает команду AddFamily.
         /// </summary>
         public TaskCommand AddFamily { get; private set; }
 
         /// <summary>
         /// Method to invoke when the AddFamily command is executed.
+        /// Метод, который вызывается, когда команда AddFamily активирована.
         /// </summary>
         private async Task OnAddFamilyExecuteAsync()
         {
@@ -132,6 +144,9 @@ namespace WPF.GettingStarted.ViewModels
 
             // Note that we use the type factory here because it will automatically take care of any dependencies
             // that the FamilyWindowViewModel will add in the future
+            // Обратите внимание, что мы используем фабрику типов здесь,
+            //потому что она автоматически позаботится о любых зависимостях,
+            //которые FamilyWindowViewModel будет добавлять в будущем
             var typeFactory = this.GetTypeFactory();
             var familyWindowViewModel = typeFactory.CreateInstanceWithParametersAndAutoCompletion<FamilyWindowViewModel>(family);
             if (await uiVisualizerService.ShowDialogAsync(familyWindowViewModel) ?? false)
@@ -144,11 +159,13 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Gets the EditFamily command.
+        /// Получает команду EditFamily.
         /// </summary>
         public TaskCommand EditFamily { get; private set; }
 
         /// <summary>
         /// Method to check whether the EditFamily command can be executed.
+        /// Метод проверки выбрана команды EditFamily.
         /// </summary>
         /// <returns><c>true</c> if the command can be executed; otherwise <c>false</c></returns>
         private bool OnEditFamilyCanExecute()
@@ -158,11 +175,15 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Method to invoke when the EditFamily command is executed.
+        /// Метод вызова, когда выбрана команда EditFamily.
         /// </summary>
         private async Task OnEditFamilyExecute()
         {
             // Note that we use the type factory here because it will automatically take care of any dependencies
             // that the PersonViewModel will add in the future
+            // Обратите внимание, что мы используем фабрику типов здесь,
+            // потому что она автоматически позаботится о любых зависимостях,
+            // которые PersonViewModel будет добавлять в будущем
             var typeFactory = this.GetTypeFactory();
             var familyWindowViewModel = typeFactory.CreateInstanceWithParametersAndAutoCompletion<FamilyWindowViewModel>(SelectedFamily);
             await uiVisualizerService.ShowDialogAsync(familyWindowViewModel);
@@ -170,11 +191,13 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Gets the RemoveFamily command.
+        /// Получает команду RemoveFamily.
         /// </summary>
         public TaskCommand RemoveFamily { get; private set; }
 
         /// <summary>
         /// Method to check whether the RemoveFamily command can be executed.
+        /// Метод проверки возможности выполнения команды RemoveFamily.
         /// </summary>
         /// <returns><c>true</c> if the command can be executed; otherwise <c>false</c></returns>
         private bool OnRemoveFamilyCanExecute()
@@ -184,6 +207,7 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Method to invoke when the RemoveFamily command is executed.
+        /// Метод вызова, когда выбрана команда RemoveFamily.
         /// </summary>
         private async Task OnRemoveFamilyExecute()
         {
@@ -197,6 +221,7 @@ namespace WPF.GettingStarted.ViewModels
 
         /// <summary>
         /// Updates the filtered items.
+        /// Обновляет фильтрованные элементы.
         /// </summary>
         private void UpdateSearchFilter()
         {
