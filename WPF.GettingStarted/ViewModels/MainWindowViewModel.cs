@@ -15,25 +15,37 @@ namespace WPF.GettingStarted.ViewModels
 
     /// <summary>
     /// MainWindow view model.
+    /// Модель главного окна
     /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly IFamilyService _familyService;
-        private readonly IUIVisualizerService _uiVisualizerService;
-        private readonly IMessageService _messageService;
+        /// <summary>
+        /// Переменная для хранения Интерфейса сериализации, реализованного в этом проекте
+        /// </summary>
+        private readonly IFamilyService familyService;
+        /// <summary>
+        /// Переменная для храниения Интерфейса показа диалоговых окон, реализованного в Catel
+        /// </summary>
+        private readonly IUIVisualizerService uiVisualizerService;
+        /// <summary>
+        /// Переменная для хранения Интерфейса показа сообщений, реализованного в Catel
+        /// </summary>
+        private readonly IMessageService messageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
+        /// Инициализирует новый экземпляр класса <see cref = "MainWindowViewModel" />.
         /// </summary>
         public MainWindowViewModel(IFamilyService familyService, IUIVisualizerService uiVisualizerService, IMessageService messageService)
         {
+            //Проверка входящих значений
             Argument.IsNotNull(() => familyService);
             Argument.IsNotNull(() => uiVisualizerService);
             Argument.IsNotNull(() => messageService);
 
-            _familyService = familyService;
-            _uiVisualizerService = uiVisualizerService;
-            _messageService = messageService;
+            this.familyService = familyService;
+            this.uiVisualizerService = uiVisualizerService;
+            this.messageService = messageService;
 
             AddFamily = new TaskCommand(OnAddFamilyExecuteAsync);
             EditFamily = new TaskCommand(OnEditFamilyExecute, OnEditFamilyCanExecute);
@@ -122,7 +134,7 @@ namespace WPF.GettingStarted.ViewModels
             // that the FamilyWindowViewModel will add in the future
             var typeFactory = this.GetTypeFactory();
             var familyWindowViewModel = typeFactory.CreateInstanceWithParametersAndAutoCompletion<FamilyWindowViewModel>(family);
-            if (await _uiVisualizerService.ShowDialogAsync(familyWindowViewModel) ?? false)
+            if (await uiVisualizerService.ShowDialogAsync(familyWindowViewModel) ?? false)
             {
                 Families.Add(family);
 
@@ -153,7 +165,7 @@ namespace WPF.GettingStarted.ViewModels
             // that the PersonViewModel will add in the future
             var typeFactory = this.GetTypeFactory();
             var familyWindowViewModel = typeFactory.CreateInstanceWithParametersAndAutoCompletion<FamilyWindowViewModel>(SelectedFamily);
-            await _uiVisualizerService.ShowDialogAsync(familyWindowViewModel);
+            await uiVisualizerService.ShowDialogAsync(familyWindowViewModel);
         }
 
         /// <summary>
@@ -175,7 +187,7 @@ namespace WPF.GettingStarted.ViewModels
         /// </summary>
         private async Task OnRemoveFamilyExecute()
         {
-            if (await _messageService.ShowAsync(string.Format("Are you sure you want to delete the family '{0}'?", SelectedFamily),
+            if (await messageService.ShowAsync(string.Format("Are you sure you want to delete the family '{0}'?", SelectedFamily),
                 "Are you sure?", MessageButton.YesNo, MessageImage.Question) == MessageResult.Yes)
             {
                 Families.Remove(SelectedFamily);
@@ -212,7 +224,7 @@ namespace WPF.GettingStarted.ViewModels
 
         protected override async Task InitializeAsync()
         {
-            var families = _familyService.LoadFamilies();
+            var families = familyService.LoadFamilies();
 
             Families = new ObservableCollection<Family>(families);
 
@@ -221,7 +233,7 @@ namespace WPF.GettingStarted.ViewModels
 
         protected override async Task CloseAsync()
         {
-            _familyService.SaveFamilies(Families);
+            familyService.SaveFamilies(Families);
         }
 
         #endregion
